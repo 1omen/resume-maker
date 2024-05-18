@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Дополнительные стили */
+        .blue-section {
+            background-color: #054275; /* Синий цвет для левой части */
+            min-height: 100vh; /* Чтобы занимала всю высоту вьюпорта */
+        }
+
+        .white-section {
+            background-color: #fdfdfd; /* Белый цвет для остальной части */
+            min-height: 100vh; /* Чтобы занимала всю высоту вьюпорта */
+        }
+
+        .parameter-text {
+            color: #054275;
+        }
+
+        .parameter-line {
+            background-color: #054275;
+            height: 1px;
+            width: 400px;
+            margin-top: 18px
+        }
+
+        .avatar {
+            width: 150px; /* или другой желаемый размер */
+            height: 150px; /* или другой желаемый размер */
+        }
+
+        .avatar-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+
+        .blue-parameter {
+            width: 100%;
+            height: 50px;
+            background-color: #032b4f;
+            display: flex;
+            /*justify-content: center;*/
+            align-items: center;
+            font-size: x-large;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Левая четверть синего цвета -->
+        <div class="col-md-4 blue-section">
+            <div class="avatar-container">
+                <% if (user.avatarURL) { %>
+                    <!-- Если avatarURL существует, показываем пользовательскую аватарку с тенью -->
+                    <img src="<%= user.avatarURL %>" alt="Аватар пользователя" class="img-thumbnail shadow avatar">
+                <% } else { %>
+                    <!-- Если avatarURL не существует, показываем дефолтную аватарку с тенью -->
+                    <img src="http://localhost:3000/src/default.png" alt="Дефолтная аватарка" class="img-thumbnail shadow avatar">
+                <% } %>
+            </div>
+            <div class="blue-parameter mt-1 pl-3">КОНТАКТЫ</div>
+            <div style="font-size: large; color: white" class="pl-4 pt-3">
+                <% if (user.email) { %>
+                    <p style="justify-content: center">
+                        <img src="http://localhost:3000/src/email.png" alt="email"
+                             style="height: 16px" class="mr-1 mt-n1"><%= user.email %>
+                    </p>
+                <% } %>
+                <% if (user.phoneNumber) { %>
+                    <p style="justify-content: center">
+                        <img src="http://localhost:3000/src/phone.png" alt="phone"
+                             style="height: 12px" class="mr-2 mt-n1"><%= user.phoneNumber %>
+                    </p>
+                <% } %>
+            </div>
+            <div class="blue-parameter mt-1 pl-3">НАВЫКИ</div>
+            <div style="font-size: large; color: white" class="pl-4 pt-3">
+                <% if (user.phoneNumber) { %>
+                    <p style="justify-content: center">
+                        <%= user.skills %>
+                    </p>
+                <% } %>
+            </div>
+        </div>
+        <!-- Оставшиеся 3/4 белого цвета -->
+        <div class="col-md-8 white-section">
+            <!-- Содержимое белой части -->
+            <h1 class="text-uppercase font-weight-bold mt-3 ml-3" style="color: #054275"><%= user.fullName %></h1>
+            <h3 class="text-uppercase font-weight-bold mt-3 ml-3"
+                style="color: #054275"><%= user.desiredPosition %></h3>
+
+            <div style="display: flex" class="mt-3">
+                <div class="ml-3">
+                    <img src="http://localhost:3000/src/location.png" alt="location-logo" height="16">
+                    г. <%= user.city %>
+                </div>
+                <% if (user.age) { %>
+                    <div class="ml-3">
+                        <img src="http://localhost:3000/src/info.png" alt="info-logo" height="14">
+                        Возраст: <%= user.age %>
+                    </div>
+                <% } %>
+
+            </div>
+
+            <div style="display: flex" class="mt-4 parameter-text">
+                <div class="ml-3">
+                    <h3 class="text-uppercase">Опыт работы</h3>
+                </div>
+                <div class="ml-2 parameter-line">
+                </div>
+                <div class="ml-2">
+                    <img src="http://localhost:3000/src/briefcase.png" alt="info-logo" height="24">
+                </div>
+            </div>
+            <div class="mt-3" style="font-size: larger; max-width: 90%">
+                <% if (user.workExperience) { %>
+                    <ul>
+                        <% user.workExperience.split(';').forEach(function(experience) {
+                            experience = experience.trim();
+                        if (experience) {
+                            var parts = experience.split(',');
+                        %>
+                        <li class="mt-1">
+                            <strong><%= parts[0].trim() %></strong> <!-- First part in bold -->
+                            <% if (parts.length > 1 && parts[1].trim()) { %>
+                                <%= parts[1].trim() %> <!-- Second part in default style -->
+                            <% } %>
+                            <% if (parts.length > 2 && parts[2].trim()) { %>
+                                </br><i><%= parts[2].trim() %></i> <!-- Third part in default style -->
+                            <% } %>
+                        </li>
+                        <%
+                        }
+                        }); %>
+                    </ul>
+                <% } %>
+            </div>
+
+
+            <div style="display: flex" class="mt-4 parameter-text">
+                <div class="ml-3">
+                    <h3 class="text-uppercase">Образование</h3>
+                </div>
+                <div class="ml-2 parameter-line" style="width: 398px">
+                </div>
+                <div class="ml-2">
+                    <img src="http://localhost:3000/src/education.png" alt="info-logo" height="36">
+                </div>
+            </div>
+            <div class="mt-3" style="font-size: larger; max-width: 90%">
+                <% if (user.education) { %>
+                    <ul>
+                        <% user.education.split(';').forEach(function(experience) {
+                            experience = experience.trim();
+                        if (experience) {
+                            var parts = experience.split(',');
+                        %>
+                        <li class="mt-1">
+                            <strong><%= parts[0].trim() %></strong> <!-- First part in bold -->
+                            <% if (parts.length > 1 && parts[1].trim()) { %>
+                                <%= parts[1].trim() %> <!-- Second part in default style -->
+                            <% } %>
+                            <% if (parts.length > 2 && parts[2].trim()) { %>
+                                </br><i><%= parts[2].trim() %></i> <!-- Third part in default style -->
+                            <% } %>
+                        </li>
+                        <%
+                        }
+                        }); %>
+                    </ul>
+                <% } %>
+            </div>
+
+            <div style="display: flex" class="mt-4 parameter-text">
+                <div class="ml-3">
+                    <h3 class="text-uppercase">О себе</h3>
+                </div>
+                <div class="ml-2 parameter-line" style="width: 507px">
+                </div>
+                <div class="ml-2">
+                    <img src="http://localhost:3000/src/me.png" alt="info-logo" height="36">
+                </div>
+            </div>
+            <div class="mt-3 ml-4" style="font-size: larger; max-width: 90%; text-justify: auto;">
+                <% if (user.aboutMe) { %>
+                    <p><%= user.aboutMe %></p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JavaScript и зависимости (опционально) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

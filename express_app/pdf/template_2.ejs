@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Резюме</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            font-size: 20px; /* Увеличенный размер текста */
+            background-color: #f0f5f0; /* Светлый зеленоватый фон */
+        }
+        .header {
+            background-color: #2e7d32;
+            color: white;
+            padding: 30px; /* Увеличенные отступы */
+            text-align: center;
+        }
+        .profile-pic {
+            width: 200px; /* Увеличенная ширина */
+            height: 200px; /* Увеличенная высота */
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 20px auto;
+            display: block;
+        }
+        .section-title {
+            color: #1b5e20;
+            font-weight: bold;
+            margin-top: 30px;
+            border-bottom: 2px solid #1b5e20;
+            padding-bottom: 5px;
+        }
+        .contact-info, .skills-info, .experience-info, .education-info, .about-me-info {
+            margin-top: 20px;
+        }
+        .contact-info img, .skills-info img, .experience-info img, .education-info img, .about-me-info img {
+            width: 24px; /* Увеличенный размер иконок */
+            margin-right: 10px;
+        }
+        .content {
+            padding: 30px; /* Увеличенные отступы */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><%= user.fullName %></h1>
+        <h3><%= user.desiredPosition %></h3>
+    </div>
+    <div class="content">
+        <div class="text-center">
+            <% if (user.avatarURL) { %>
+                <img src="<%= user.avatarURL %>" alt="Фотография пользователя" class="profile-pic">
+            <% } else { %>
+                <img src="http://localhost:3000/src/default.png" alt="Дефолтная аватарка" class="profile-pic">
+            <% } %>
+        </div>
+        <div class="contact-info">
+            <h2 class="section-title">Контакты</h2>
+            <% if (user.email) { %>
+                <p><img src="http://localhost:3000/src/email.png" alt="email"> <%= user.email %></p>
+            <% } %>
+            <% if (user.phoneNumber) { %>
+                <p><img src="http://localhost:3000/src/phone.png" alt="phone"> <%= user.phoneNumber %></p>
+            <% } %>
+            <p><img src="http://localhost:3000/src/location.png" alt="location"> <%= user.city %></p>
+            <% if (user.age) { %>
+                <p><img src="http://localhost:3000/src/info.png" alt="info"> Возраст: <%= user.age %></p>
+            <% } %>
+        </div>
+        <div class="skills-info">
+            <h2 class="section-title">Навыки</h2>
+            <p><%= user.skills %></p>
+        </div>
+        <div class="experience-info">
+            <h2 class="section-title">Опыт работы</h2>
+            <% if (user.workExperience) { %>
+                <ul>
+                    <% user.workExperience.split(';').forEach(function(experience) {
+                        experience = experience.trim();
+                        if (experience) {
+                            var parts = experience.split(',');
+                    %>
+                    <li>
+                        <strong><%= parts[0].trim() %></strong> <!-- Название компании -->
+                        <% if (parts.length > 1 && parts[1].trim()) { %> - <%= parts[1].trim() %> <% } %> <!-- Должность -->
+                        <% if (parts.length > 2 && parts[2].trim()) { %><br><i><%= parts[2].trim() %></i><% } %> <!-- Период работы -->
+                    </li>
+                    <% }
+                    }); %>
+                </ul>
+            <% } %>
+        </div>
+        <div class="education-info">
+            <h2 class="section-title">Образование</h2>
+            <% if (user.education) { %>
+                <ul>
+                    <% user.education.split(';').forEach(function(education) {
+                        education = education.trim();
+                        if (education) {
+                            var parts = education.split(',');
+                    %>
+                    <li>
+                        <strong><%= parts[0].trim() %></strong> <!-- Название учебного заведения -->
+                        <% if (parts.length > 1 && parts[1].trim()) { %> - <%= parts[1].trim() %> <% } %> <!-- Факультет -->
+                        <% if (parts.length > 2 && parts[2].trim()) { %><br><i><%= parts[2].trim() %></i><% } %> <!-- Год выпуска -->
+                    </li>
+                    <% }
+                    }); %>
+                </ul>
+            <% } %>
+        </div>
+        <div class="about-me-info">
+            <h2 class="section-title">О себе</h2>
+            <p><%= user.aboutMe %></p>
+        </div>
+    </div>
+</body>
+</html>

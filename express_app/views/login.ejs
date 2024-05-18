@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Авторизация</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="http://localhost:3000/src/favicon.png" type="image/x-icon">
+</head>
+<body>
+<main class="container mt-5 col-md-4 col-sm-6 col-10">
+    <% if (failed) { %>
+        <div class="alert alert-danger" role="alert">
+            Неверное имя пользователя или пароль.
+        </div>
+    <% } %>
+    <h1 class="mb-4">Авторизация</h1>
+    <form action="/auth/login" method="post">
+        <div class="form-group">
+            <label for="username">Имя пользователя</label>
+            <input type="text" class="form-control" id="username" name="username" autocomplete="username" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input type="password" class="form-control" id="current-password" name="password" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Войти</button>
+        <a href="/auth/signup" class="btn btn-link">Нет аккаунта?</a>
+    </form>
+</main>
+
+<!-- Опционально: JavaScript и Popper.js для Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.8/dist/umd/popper.min.js" defer></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" defer></script>
+</body>
+</html>
